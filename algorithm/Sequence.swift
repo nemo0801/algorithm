@@ -19,7 +19,7 @@ import Foundation
  
  */
 class Sequence {
-
+  
 }
 
 //MARK: - 插入排序
@@ -149,7 +149,7 @@ extension Sequence {
    */
   
   private class func buildingHeap<T>(_ heap: inout [T]) where T: Comparable {
-  //最后一个有孩子的节点的位置 i=  (length -1) / 2
+    //最后一个有孩子的节点的位置 i=  (length -1) / 2
     for var i in stride(from: (heap.count - 1) / 2, through: 0, by: -1) {
       heapAdjust(&heap, index: &i, length: heap.count)
     }
@@ -176,36 +176,53 @@ extension Sequence {
       for j in 0 ..< array.count - i - 1 {
         if array[j] > array[j+1] {
           let tmp = array[j];  array[j+1] = array[j]; array[j] = tmp;
+        } else {
+          return array
         }
       }
     }
     return array
   }
-
+  
   //MARK: - 冒泡排序改进版2
   class func bubbleSort2<T>(_ array: inout [T]) -> [T] where T: Comparable {
-    for i in 0 ..< array.count {
-      for j in 0 ..< array.count - i - 1 {
+    var i = array.count - 1 //初始时,最后位置保持不变
+    while ( i > 0) {
+      var pos = 0 //每趟开始时,无记录交换
+      for j in 0 ..< i {
         if array[j] > array[j+1] {
-          let tmp = array[j];  array[j+1] = array[j]; array[j] = tmp;
+          pos = j; //记录交换的位置
+          let tmp = array[j]; array[j]=array[j+1]; array[j+1]=tmp;
         }
+        i = pos; //为下一趟排序作准备
       }
     }
     return array
   }
   //MARK: - 冒泡排序改进版3
   class func bubbleSort3<T>(_ array: inout [T]) -> [T] where T: Comparable {
-    for i in 0 ..< array.count {
-      for j in 0 ..< array.count - i - 1 {
-        if array[j] > array[j+1] {
-          let tmp = array[j];  array[j+1] = array[j]; array[j] = tmp;
+    var low = 0
+    var high = array.count - 1 //设置变量的初始值
+    
+    while (low < high) {
+      for j in low ..< high {//正向冒泡,找到最大者
+        if (array[j] > array[j+1]) {
+          let tmp = array[j]; array[j]=array[j+1]; array[j+1]=tmp;
         }
       }
+      high -= 1; //修改high值, 前移一位
+      for j in (low + 1 ... high).reversed() {//反向冒泡,找到最小者
+        if (array[j] < array[j-1]) {
+          let tmp = array[j]; array[j]=array[j-1]; array[j-1]=tmp;
+          
+        }
+      }
+      low += 1; //修改low值,后移一位
     }
     return array
   }
-
-
+  
+  
   //MARK: - 快速排序
-
+  
 }
