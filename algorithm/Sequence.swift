@@ -19,8 +19,12 @@ import Foundation
  
  */
 class Sequence {
-  
-  //MARK: - 插入排序
+
+}
+
+//MARK: - 插入排序
+extension Sequence {
+  //MARK: - 直接插入排序
   class func insertSort<T>(_ array: inout [T]) -> [T] where T: Comparable {
     for i in 1..<array.count {
       if array[i] < array[i-1] {
@@ -57,8 +61,12 @@ class Sequence {
     }
     return array
   }
-
-  //选择排序
+}
+//MARK: - 选择排序
+extension Sequence {
+  
+  
+  //MARK: - 简单的选择排序
   class func selectSort<T>(_ array: inout [T]) -> [T] where T: Comparable {
     for i in 0 ..< array.count {
       var k = i
@@ -72,6 +80,132 @@ class Sequence {
     return array
   }
   
-  //二元选择排序
+  //MARK: - 二元选择排序
+  class func binarySelectSort<T>(_ array: inout [T]) -> [T] where T: Comparable {
+    for i in 0 ..< array.count/2 {
+      var max = i, min = i
+      for j in i+1 ... array.count - i - 1 {
+        if array[j] > array[max] {
+          max = j;continue
+        }
+        if array[j] < array[min] {
+          min = j
+        }
+      }
+      if min == i {
+        let tmp = array[array.count - i-1];  array[array.count - i-1] = array[max]; array[max] = tmp;
+      } else {
+        let tmp = array[array.count-i-1];  array[array.count-i-1] = array[min]; array[min] = tmp;
+      }
+    }
+    return array
+  }
+  //MARK: - 堆排序
   
+  class func heapSort<T>(_ array: inout [T]) -> [T] where T: Comparable {
+    //初始堆
+    buildingHeap(&array)
+    //从最后一个元素开始对序列进行调整
+    for i in (0..<array.count).reversed() {
+      //交换堆顶元素H[0]和堆中最后一个元素
+      let temp = array[i]; array[i] = array[0]; array[0] = temp;
+      //每次交换堆顶元素和堆中最后一个元素之后，都要对堆进行调整
+      var index = 0
+      
+      heapAdjust(&array, index: &index, length: i)
+    }
+    return array
+  }
+  /**
+   * 已知H[s…m]除了H[s] 外均满足堆的定义
+   * 调整H[s],使其成为大顶堆.即将对第s个结点为根的子树筛选,
+   *
+   * @param H是待调整的堆数组
+   * @param s是待调整的数组元素的位置
+   * @param length是数组的长度
+   *
+   */
+  private class func heapAdjust<T>(_ heap: inout [T], index: inout Int, length: Int) where T: Comparable {
+    let tmp  = heap[index]
+    var child = 2 * index + 1 //左孩子结点的位置。(i+1 为当前调整结点的右孩子结点的位置)
+    while (child < length) {
+      if(child + 1 < length && heap[child] < heap[child+1]) { // 如果右孩子大于左孩子(找到比当前待调整结点大的孩子结点)
+        child += 1
+      }
+      if(heap[index] < heap[child]) {  // 如果较大的子结点大于父结点
+        heap[index] = heap[child] // 那么把较大的子结点往上移动，替换它的父结点
+        index = child // 重新设置index ,即待调整的下一个结点的位置
+        child = 2 * index + 1
+      }  else { // 如果当前待调整结点大于它的左右孩子，则不需要调整，直接退出
+        break
+      }
+      heap[index] = tmp // 当前待调整的结点放到比其大的孩子结点位置上
+    }
+  }
+  /**
+   * 初始堆进行调整
+   * 将H[0..length-1]建成堆
+   * 调整完之后第一个元素是序列的最小的元素
+   */
+  
+  private class func buildingHeap<T>(_ heap: inout [T]) where T: Comparable {
+  //最后一个有孩子的节点的位置 i=  (length -1) / 2
+    for var i in stride(from: (heap.count - 1) / 2, through: 0, by: -1) {
+      heapAdjust(&heap, index: &i, length: heap.count)
+    }
+  }
+}
+
+//MARK: - 交换排序
+extension Sequence {
+  //MARK: - 冒泡排序
+  class func bubbleSort<T>(_ array: inout [T]) -> [T] where T: Comparable {
+    for i in 0 ..< array.count {
+      for j in 0 ..< array.count - i - 1 {
+        if array[j] > array[j+1] {
+          let tmp = array[j];  array[j+1] = array[j]; array[j] = tmp;
+        }
+      }
+    }
+    return array
+  }
+  
+  //MARK: - 冒泡排序改进版1
+  class func bubbleSort1<T>(_ array: inout [T]) -> [T] where T: Comparable {
+    for i in 0 ..< array.count {
+      for j in 0 ..< array.count - i - 1 {
+        if array[j] > array[j+1] {
+          let tmp = array[j];  array[j+1] = array[j]; array[j] = tmp;
+        }
+      }
+    }
+    return array
+  }
+
+  //MARK: - 冒泡排序改进版2
+  class func bubbleSort2<T>(_ array: inout [T]) -> [T] where T: Comparable {
+    for i in 0 ..< array.count {
+      for j in 0 ..< array.count - i - 1 {
+        if array[j] > array[j+1] {
+          let tmp = array[j];  array[j+1] = array[j]; array[j] = tmp;
+        }
+      }
+    }
+    return array
+  }
+  //MARK: - 冒泡排序改进版3
+  class func bubbleSort3<T>(_ array: inout [T]) -> [T] where T: Comparable {
+    for i in 0 ..< array.count {
+      for j in 0 ..< array.count - i - 1 {
+        if array[j] > array[j+1] {
+          let tmp = array[j];  array[j+1] = array[j]; array[j] = tmp;
+        }
+      }
+    }
+    return array
+  }
+
+
+  //MARK: - 快速排序
+
 }

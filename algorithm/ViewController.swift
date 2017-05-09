@@ -16,6 +16,9 @@ class ViewController: UIViewController {
     print(Sequence.insertSort(&array))
     print(Sequence.shellSort(&array))
     print(Sequence.selectSort(&array))
+    print(Sequence.binarySelectSort(&array))
+    print(Sequence.heapSort(&array))
+    print(Sequence.bubbleSort(&array))
     // Do any additional setup after loading the view, typically from a nib.
   }
 
