@@ -210,13 +210,13 @@ extension Sequence {
           let tmp = array[j]; array[j]=array[j+1]; array[j+1]=tmp;
         }
       }
-      high -= 1; //修改high值, 前移一位
       for j in (low + 1 ... high).reversed() {//反向冒泡,找到最小者
         if (array[j] < array[j-1]) {
           let tmp = array[j]; array[j]=array[j-1]; array[j-1]=tmp;
           
         }
       }
+      high -= 1; //修改high值, 前移一位
       low += 1; //修改low值,后移一位
     }
     return array
