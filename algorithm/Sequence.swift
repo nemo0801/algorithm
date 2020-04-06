@@ -224,5 +224,27 @@ extension Sequence {
   
   
   //MARK: - 快速排序
-  
+  class func quick_sort<T> (_ arr: inout [T]) where T: Comparable {
+      quick_sort_c( &arr, 0, arr.count-1)
+  }
+
+  private class func quick_sort_c<T> (_ arr: inout [T], _ left: Int, _ right: Int)  where T: Comparable {
+      if left>=right {return}
+      let q = partition(&arr,left,right)
+      quick_sort_c( &arr, left, q-1)
+      quick_sort_c( &arr, q+1, right)
+
+  }
+  private class func partition<T> (_ arr: inout [T], _ left: Int, _ right: Int) ->Int  where T: Comparable {
+      let pivot = arr[right]
+      var i = left
+      for j in i...right - 1 {
+          if arr[j] <= pivot {
+              arr.swapAt(i, j)
+              i+=1
+          }
+      }
+      arr.swapAt(i, right)
+      return i
+  }
 }

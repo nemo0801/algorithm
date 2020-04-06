@@ -22,6 +22,7 @@ class ViewController: UIViewController {
     print(Sequence.bubbleSort1(&array))
     print(Sequence.bubbleSort2(&array))
     print(Sequence.bubbleSort3(&array))
+    print(Sequence.quick_sort(&array))
     // Do any additional setup after loading the view, typically from a nib.
   }
 
